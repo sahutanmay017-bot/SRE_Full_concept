@@ -1,1 +1,3 @@
-mynew project 
+1.create an ec2 instance
+2.clone this repo 
+2.execute ./install.sh (it will install docker, kind , kubectl) 
