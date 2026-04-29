@@ -1,0 +1,117 @@
+MONOLITHIC:
+SINGLE=APPLICATION, SERVER AND DATABASE &  MULTIPLE=SERVICES
+MICROSERVICES:
+MULTIPLE=SERVICES, SERVERS AND DATABASE &  SINGLE=APPLICATION
+
+WHY ?
+1. IF SOME THING WRONG WITH ONE SERVICE WE NEED TO STOP ENTIRE APPLICATION
+THEN ALL OTHER SERVIVCES ALSO STOPPED.
+2. DB ISSUES
+
+SERVER = CONTAINERS
+
+
+CONATINERS:
+Its a light weighted used to create,manage & deploy applications.
+it will not have os/packages, we need to install them from images.
+to crate container we are using the docker.
+
+DOCKER:
+it is a tool used to create containers.
+written on go lang.
+release: 2013
+written: solomen hykes and sebastian phal.
+its a free, opensource tool and platform independent.
+it helps to containarize the application.
+
+Containarization:
+packing application(pubg) along with its dependencies(maps).
+os level of virtualization.
+
+ARCHITECURE:
+
+Client --- > daemon -- > registry
+you --- > mom --- > dad
+
+CLIENT: it will interact with us. takes commands and excutes 
+HOST: where we install docker (windows, linux, macos)
+DAEMON: A background service which manages all the docker componets 
+REGISTRY: its a central platform which contains all the images
+
+image (os/packages) --- > yes --- > container
+
+
+docker images : to see the images present locally
+docker pull amazonlinux : to download image (manually done)
+docker run -it --name cont1 amazonlinux: to create from amazonlinux image
+docker ps --> it will list the containers running
+
+ctrl p q : to exit from container
+docker container ls : to show  list of container
+docker ps -a : (same)
+
+
+docker start cont_name : to start container
+docker attach cont_name : to go inside container
+
+docker stop cont_name : to start container
+
+################################
+Custom images, Dockerfile, Deployment
+
+automation:
+DOCKER FILE:
+its an automation way of creating out custom images.
+components in docker file is always captial.
+in Dockerfile D is capital
+
+FROM: used for base image
+RUN: used to run commands (during image creation)
+CMD: used to run commands (during container creation)
+ENTRYPOINT: more priority than cmd.
+COPY: used to copy local files
+ADD: used to copy files from internet.
+WORKDIR: used to set default dir for cont
+LABEL: used to attach labels (name, email ----)
+ENV: used to set env variables (work inside cont)
+ARGS: used to set variables (work outside cont)
+VOLUME: used to attach volume to cont
+EXPOSE: to give port numbers
+
+
+TO RUN DOCKERFILE: docker build -t image:v1 .
+TO CREATE CONT: docker run -it --name cont1 image:v1 
+
+
+docker inspect cont_name : to show full info of container
+docker inspect cont6 | grep -i author
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
