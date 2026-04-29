@@ -1,0 +1,115 @@
+
+STAGES OF GIT:
+
+1. WORKING DIRECTORY: we write the source code.
+2. STAGING AREA: We can track the code. is also called as draft space.
+3. REPO: we can store our tracked code. (.git is your local repo)
+
+
+CREATE A SERVER
+
+mkdir telecom (create an empty folder)
+cd telecom (cd to get inside folder)
+
+
+git init  
+→ Initializes a new Git repository in the current folder.
+
+touch file.txt  
+→ Creates a new file named file.txt.
+
+git status  
+→ Shows the current status of files (tracked, untracked, changes, etc.).
+
+git add file.txt  
+→ Stages the file (prepares it to be committed).
+
+git commit -m "Adding new file"  
+→ Commits the staged changes with a message.
+
+git log
+ -> show the commit details
+
+git branch  
+→ Lists all branches in the repository.
+
+git branch feature1  
+→ Creates a new branch named "feature1".
+
+git checkout feature1  
+→ Switches to the "feature1" branch.
+(Alternatively: git switch feature1)
+
+cat > file1  
+→ Creates a new file named "file1" and lets you add content (Ctrl + D to save).
+
+git add file1  
+→ Stages the file for commit.
+
+git commit -m "Adding file1"  
+→ Commits the staged changes.
+
+git checkout main  
+→ Switch back to the main branch (sometimes called "master").
+
+git merge feature1  
+→ Merges changes from "feature1" into the current branch (main/master).
+
+git rebase main  
+→ Re-applies commits from the current branch on top of "main".
+
+
+GITHUB:
+its a place where we can store code on internet.
+everyone can access the code.
+daily we can do push and pull activites.
+
+
+git remote add origin https://github.com/sahutanmay017-bot/SRE_Full_concept.git
+
+github removed password option in aug 2021, from then we are using tokens.
+Token will be visible only once.
+
+
+Settings -- > Developer Settings -- > personal access token -- > classic -- > generate tokne -- > classic -- > 
+
+
+
+GIT PUSH: To send files from local (.git) to remote/central (GitHub)
+git push origin branch_name
+
+
+GIT PUSH: To receive files from central (GitHub) to local (.git)
+git pull origin branch_name
+
+
+MERGE CONFLICTS:
+WHEN WE MERGE 2 DIFFERENT BRANCHES WITH COMMON FILES WITH DIFFERENT CONTENT CONFLICTS WILL OCCUR.
+WE NEED TO RESOLVE THESE CONFICTS MANUALLY.
+
+
+
+GIT CLONE: GETTING THE REPOSITORY TO LOCAL 
+GIT FORK: GETTING THE REPOSITORY TO GITHUB
+
+CLONE VS PULL
+REPOSITORY: CLONE 
+FILE: PULL 
+
+FETCH VS PULL:
+To get the difference in files : PULL
+To show the difference in files: FETCH
+
+git pull origin master
+git fetch origin master
+
+CHERRY-PICK:
+To get specific files to one branch to another branch 
+
+
+COMMANDS:
+PUSH: git push origin master
+PULL: git pull origin master
+FETCH: git fecth 
+CLONE: git clone repo_url
+CHERRY-PICK: git cherry-pick commit_id
