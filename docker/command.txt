@@ -86,6 +86,89 @@ TO CREATE CONT: docker run -it --name cont1 image:v1
 docker inspect cont_name : to show full info of container
 docker inspect cont6 | grep -i author
 
+********************************
+Example:1
+
+FROM ubuntu:latest
+ 
+WORKDIR /app
+ 
+RUN apt update -y && \
+    apt install -y nginx && \
+    apt clean
+ 
+COPY . /app
+ 
+EXPOSE 80
+ 
+CMD ["nginx", "-g", "daemon off;"]
+
+Example :2
+FROM ubuntu
+RUN apt update -y
+RUN apt install apache2 maven tree -y
+RUN touch file{1..10}
+
+
+EX-3:
+
+FROM ubuntu
+RUN apt update -y
+RUN apt install apache2 maven tree -y
+RUN touch file{1..10}
+COPY raham.txt /tmp
+ADD http://dlcdn.apache.org/tomcat/tomcat-9/v9.0.78/bin/apache-tomcat-9.0.78.tar.gz /tmp
+
+Create Dockerfile using above examples and run below commands.
+docker build -t nginx-ts .
+docker images
+docker run -it --name my-cont -p 80:80 nginx-ts:latest 
+
+
+DOCKER COMPOSE:
+its a tool used to create multiple containers together.
+inside containers we create services.
+its a text file with yaml fromat.
+yaml works on key-value pair.
+inside this file we can describe images, ports, volume, replicas and networks.
+Default file is: docker-compose.yml (or) compose.yml (yml=yaml)
+
+INSTALL:
+sudo curl -L "https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+ls /usr/local/bin/
+sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+docker-compose version
+
+docker-compose up -d	: to run containers on compose files 
+docker-compose stop	: to stop containers on compose file
+docker-compose start	: to start containers on compose file
+docker-compose pause	: to pause containers on compose file
+docker-compose unpause	: to unpause containers on compose file
+docker-compose down	: to delete containers on compose file
+docker-compose ps	: to list containers created from compose file
+docker-compose images	: to list images used on compose file
+docker-compose logs	: to show logs of compose
+
+CHANGING THE DEFAULT FILE:
+rename docker-compose file to raham.yml and run below command
+docker-compose -f raham.yml down
+
+
+
+DOCKERHUB:
+its a central repo where we can store images
+
+docker login
+docker tag image:v1 username/repo
+docker push username/repo
+
+docker tag tanmay:recharge laxmisrikar99/recharge
+docker push laxmisrikar99/recharge
+
+
+
+
 
 
 
