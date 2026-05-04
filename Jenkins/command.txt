@@ -1,0 +1,197 @@
+JENKINS:
+It is a CI/CD TOOL.
+
+CI : CONTINOUS INTEGRATION = CONTINOUS BUILD + CONTINOUS TEST
+ADV: 
+SAVE TIME
+MANUAL WORK WILL BE ELIMINATED
+WE CAN FIND BUGS QUICKLY AND EASILY
+
+CD: CONTINOUS DELIVERY & CONTINOUS DEPLOYMENT
+CDEL : MANUAL PROCESS OF DEPLOYING APP TO PRODUCTION.
+CDEP : AUTOMATION PROCESS OF DEPLOYING APP TO PRODUCTION.
+
+ENVS:
+DEV: DEVELOPERS
+TEST: TESTERS
+UAT: CLIENT
+PROD: END USERS
+
+
+TO DO CI, CDEL OR CDEP WE NEED TO CREATE PIPELINE:
+PIPELINE: STEP BY EXECUTION OF A PROCESS.
+SERIES OF EVENTS INERLINKED WITH EACH OTHER.
+
+DEP -- > CODE + COMPILE + TEST + ARTIFACT
+
+
+JENKINS INTRO:
+
+It is a CI/CD TOOL.
+its an free & open source and platform independent.
+jenkins req java-11.
+it consists lot of plugins.
+intiall jenkins created by sun micro systems in 2004.
+later it was taken by oracel.
+inital name of jenkins is hudson (paid).
+
+SETUP:
+CREATE EC2 WITH PORT 8080
+
+SCRIPT:
+vim jenkins.sh
+
+#STEP-1: INSTALLING GIT JAVA-1.8.0 MAVEN
+yum install git java-1.8.0-openjdk maven -y
+
+#STEP-2: GETTING THE REPO (jenkins.io --> download -- > redhat)
+sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
+
+#STEP-3: DOWNLOAD JAVA11 AND JENKINS
+amazon-linux-extras install java-openjdk11 -y
+yum install jenkins -y
+update-alternatives --config java
+
+#STEP-4: RESTARTING JENKINS (when we download service it will on stopped state)
+systemctl start jenkins.service
+systemctl status jenkins.service
+
+sh jenkins.sh
+
+=======================
+
+new item -- > cijob -- > freestyle -- > ok
+source code management -- > git -- > https://github.com/devopsbyraham/jenkins-java-project.git -- > build step --> execute shell -- > mvn clean package
+ 
+
+
+=================================================================
+
+DAY-02: PARAMETERS, variables
+
+PARAMETERS: we can pass inputs for a job.
+
+1. choice parameter: we can pass single input among multiple.
+
+Dashboard
+job
+Configuration
+This project is parameterized
+add parameter
+choice
+
+2. STRING: Directly we can pass values.
+
+choice vs string: in choice we need to define values but no need in string
+
+3. MULTI LINE STRING: we can pass input in multiple lines.
+
+4. BOOL: True of false.
+5. FILE: we can build local files.
+
+===================================================================
+
+VARIABLES: 
+It will store data
+it will change as per time.
+
+
+1. USER DEFINED: user can define it
+
+A. LOCAL VARS: will work inside the job
+
+job -- > configure -- > build step -- > execute shell
+
+name=raham
+echo "hai all my name is $name, $name is from hyd, $name is working fo NIT"
+
+save -- > build now
+
+B. GLOBAL VARS: will work outside of the job
+
+Manage Jenkins -- > System -- >  Global properties -- > Environment variables
+add -- > Name: name -- > value: raham -- > save
+
+JENKINS ENV VARS:
+Note: user cannot define all variables in jenkins, so we need to use env vars.
+ENV VARS: vars are changing build to build.
+
+job -- > config -- > build step -- > execute shell -- > the list of available environment variables
+
+
+echo "the number of build is $BUILD_NUMBER, the job is $JOB_NAME"
+
+save -- > build now
+
+==========================================================
+
+DAY-03: CRONJOB,POLL SCM, WEBHOOKS, THROTTLE BUILD
+
+CRONJOB: it will do scheduled works. it follows cron syntax
+
+*	: minutes
+*	: hours
+* 	: date
+*	: month
+*	: day (0=sunday, 1=monday -------)
+do ci job -- > Build Triggers -- > Build periodically -- > */1 * 29 7 6 -- > save
+
+DRAWBACK: It will do given work, it will not check changes.
+
+POLL SCM: it will make a build in given time when dev commit the code.
+do ci job -- > Build Triggers -- > Poll SCM -- > */1 * 29 7 6 -- > save
+
+DRAWBACK:
+it need to wait for time period.
+
+
+WEBHOOKS: It will trigger build the moment when dev commit the code.
+
+do ci job -- > Build Triggers -- > GitHub hook trigger for GITScm polling -- > save
+github -- > repo -- > settings -- > webhook -- > add -- > 
+
+Payload URL (jenkins) -- > http://15.188.51.9:8080/github-webhook/
+Content type -- > application/json -- > add webhook
+
+
+THROTTLE BUILD: To restrict the number of builds.
+WHY: to avoid server load.
+
+create a job -- > Throttle builds -- > Number of builds: 3 & Time period: hours -- > save
+
+
+ ====================================================================
+
+LINKEDJOBS: One job is linked with another job.
+if first job is ran then it will trigger second job.
+
+1. create two jobs.
+2. job-one -- > configure -- > Post-build Actions -- > Build other projects -- > two -- > save
+
+types:
+1. up stream:
+2. down stream:
+
+
+TO EXECUTE SHELL COMMANDS:
+Build Steps -- > Execute shell -- > cat /etc/passwd && cat /etc/group -- > save -- > buildnow
+To verify outupt we need to go to console output.
+
+CUSTOMWOKSPACE: we can store the output of jobs in our req location
+create a folder on server
+mkdir tanmay -- > cd /
+chown jenkins:jenkins /root
+cd /root
+chown jenkins:jenkins tanmay
+job -- > configure -- > Use custom workspace -- > /root/raham -- > save 
+
+
+Terminate a build if it's stuck: if the task is taking more than expected time we can stop it.
+
+job -- > configure -- > Build Environment -- > Terminate a build if it's stuck -- > Build steps -- > Execute shell -- > 
+touch file3
+sleep 200
+touch abcd.txt
+
+save & build
