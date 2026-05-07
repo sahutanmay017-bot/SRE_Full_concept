@@ -195,3 +195,130 @@ sleep 200
 touch abcd.txt
 
 save & build
+
+
+
+SINGLE STAGE PIPELINE: It will have only one stage in pipeline.
+
+pipeline {
+    agent any 
+    
+    stages {
+        stage('stage-1') {
+            steps {
+                sh 'touch file2'
+            }
+        }
+    }
+}
+
+
+MULTI STAGE PIPELINE: It will have more than one stage in pipeline.
+
+pipeline {
+    agent any 
+    
+    stages {
+        stage('one') {
+            steps {
+                sh 'cat /etc/passwd'
+            }
+        }
+        stage('two') {
+            steps {
+                sh 'cat /etc/group'
+            }
+        }
+        stage('three') {
+            steps {
+                sh 'touch file3'
+            }
+        }
+    }
+}
+
+PIPELINE AS A CODE: Executing multiple actions/commands on a single stage.
+
+pipeline {
+    agent any 
+    
+    stages {
+        stage('abc') {
+            steps {
+                sh 'cat /etc/passwd'
+                sh 'cat /etc/group'
+                sh 'touch file1'
+            }
+        }
+    }
+}
+
+
+PIPELINE AS A CODE SINGLE SHELL/LINE: Executing multiple actions/commands on a single stage With single shell.
+
+pipeline {
+    agent any 
+    
+    stages {
+        stage('abc') {
+            steps {
+                sh '''
+                cat /etc/passwd
+                cat /etc/group
+                touch file5
+                '''
+            }
+        }
+    }
+}
+
+CI USING PIPELINE:
+
+pipeline sytax -- > sample step : git -- > repository: https://github.com/devopsbyraham/jenkins-java-project.git -- > branch: master -- > generete pipeline script
+
+
+
+
+pipeline {
+    agent any 
+    
+    stages {
+        stage('checkout') {
+            steps {
+                git 'https://github.com/devopsbyraham/jenkins-java-project.git'
+            }
+        }
+        stage('build') {
+            steps {
+                sh 'mvn compile'
+            }
+        }
+        stage('test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
+    }
+}
+
+
+
+VARIBALES ON PILEINE:
+
+pipeline {
+    agent any 
+    environment {
+        name = 'raham'
+        loc = 'hyd'
+        c = 'nareshit'
+    }
+    
+    stages {
+        stage('one') {
+            steps {
+              echo "im $name, $name is working for $c, $name is from $loc"  
+            }
+        }
+    }
+}
+
